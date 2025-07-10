@@ -22,7 +22,7 @@ steps:
     AnalysisService: 'Veracode API'
     veracodeAppProfile: 'ADO-Test-ENG'
     version: '$(build.buildNumber)'
-    filepath: 'veracode-artifact/*'
+    filepath: 'veracode-artifact/veracode-auto-pack-s-js.zip'
     sandboxName: 'Test-ENG-4'
     createSandBox: true
     createProfile: true
