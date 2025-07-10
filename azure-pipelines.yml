@@ -1,0 +1,33 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+# This is an example of using VeraDemo Java test application with the Veracode Static Pipeline scanner.  A Veracode subscription is required.
+trigger:
+- main
+pool:
+  vmImage: 'ubuntu-latest'
+#  name: default
+steps:
+  - task: CmdLine@2
+    displayName: Veracode Package
+    inputs:
+      script: |
+        curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+        ./veracode package -s . -o veracode-artifact/ -a
+        ls -lrt veracode-artifact/
+
+- task: Veracode@3
+  inputs:
+    ConnectionDetailsSelection: 'Service Connection'
+    AnalysisService: 'Veracode API'
+    veracodeAppProfile: 'ADO-Test-ENG'
+    version: '$(build.buildNumber)'
+    filepath: 'app/target/verademo.war'
+    sandboxName: 'Test-ENG-4'
+    createSandBox: true
+    createProfile: true
+    failBuildIfUploadAndScanBuildStepFails: true
+    importResults: true
+    failBuildOnPolicyFail: true
+    maximumWaitTime: '30'
