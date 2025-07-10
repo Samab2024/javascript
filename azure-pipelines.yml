@@ -9,20 +9,20 @@ pool:
   vmImage: 'ubuntu-latest'
 #  name: default
 steps:
-- task: CmdLine@2
-  displayName: Veracode Package
-  inputs:
-    script: |
-      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-      ./veracode package -s . -o veracode-artifact/ -a
-      ls -lrt veracode-artifact/
+# - task: CmdLine@2
+#   displayName: Veracode Package
+#   inputs:
+#     script: |
+#       curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+#       ./veracode package -s . -o veracode-artifact/ -a
+#       ls -lrt veracode-artifact/
 - task: Veracode@3
   inputs:
     ConnectionDetailsSelection: 'Service Connection'
     AnalysisService: 'Veracode API'
     veracodeAppProfile: 'ADO-Test-ENG'
     version: '$(build.buildNumber)'
-    filepath: 'veracode-artifact/veracode-auto-pack-s-js.zip'
+    filepath: './Archive.zip'
     sandboxName: 'Test-ENG-4'
     createSandBox: true
     createProfile: true
