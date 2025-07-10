@@ -22,7 +22,7 @@ steps:
     AnalysisService: 'Veracode API'
     veracodeAppProfile: 'ADO-Test-ENG'
     version: '$(build.buildNumber)'
-    filepath: './Archive.zip'
+    filepath: './Archive 2.zip'
     sandboxName: 'Test-ENG-5'
     createSandBox: true
     createProfile: true
